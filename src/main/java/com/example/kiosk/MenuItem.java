@@ -34,4 +34,13 @@ public class MenuItem {
     public void setMenuDescription(String menuDescription) {
         this.menuDescription = menuDescription;
     }
+
+    @Override
+    public String toString() {
+        return "MenuItem{" +
+                "menuName='" + menuName + '\'' +
+                ", menuPrice=" + menuPrice +
+                ", menuDescription='" + menuDescription + '\'' +
+                '}';
+    }
 }

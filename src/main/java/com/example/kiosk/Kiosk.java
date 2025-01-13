@@ -1,6 +1,5 @@
 package com.example.kiosk;
 
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
@@ -23,7 +22,7 @@ public class Kiosk {
                 int selectMenuItemAns = selectMenuItem(menu);
                 if (selectMenuItemAns == 0) continue;
 
-                System.out.println("구매창");
+                System.out.println("구매창: " + menu.getMenuItems().get(selectMenuItemAns).toString());
 
             } catch (InputMismatchException e){
                 System.out.println("[오류] 숫자값을 입력해주세요.");
