@@ -115,7 +115,15 @@ public class Kiosk {
         int shoppingCartAns = scanner.nextInt();
         switch (shoppingCartAns) {
             case 1 -> {
-                System.out.println("주문이 완료되었습니다. 금액은 " + shoppingCartPriceSum + "입니다.\n");
+                System.out.println("할인 정보를 입력해주세요.");
+                UserDiscountType.printUserDiscountType();
+
+                int discountTypeAns = scanner.nextInt();
+                UserDiscountType userDiscountType = UserDiscountType.getUserDiscountType(discountTypeAns);
+                double discountRate = userDiscountType.getDiscountRate();
+                String discountName = userDiscountType.getDiscountName();
+
+                System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
                 shoppingCartList.clear();
             }
             case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
