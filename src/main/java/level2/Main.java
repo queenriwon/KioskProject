@@ -31,7 +31,6 @@ public class Main {
                 System.out.println(e.getMessage());
             }
         }
-
-
+        System.out.println("프로그램을 종료합니다");
     }
 }
