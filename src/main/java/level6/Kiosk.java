@@ -23,7 +23,7 @@ public class Kiosk {
 
                 int selectMenuItemAns = selectMenu(menu.getMenuCategory(), menu.getMenuItems());
                 if (selectMenuItemAns == 0) continue;
-                MenuItem selectedMenuItem = menu.getMenuItems().get(selectMenuItemAns);
+                MenuItem selectedMenuItem = menu.getMenuItems().get(selectMenuItemAns - 1);
 
                 // 선택한 메뉴 출력
                 System.out.println("\"" + selectedMenuItem.toString() + "\"");
@@ -69,7 +69,9 @@ public class Kiosk {
             if (selectMenuAns == 4) {
                 orderShoppingCart();
             } else if (selectMenuAns == 5) {
-                System.out.println("어떤 상품을 취소하시겠습니까?\n");
+                cancelShoppingCart();
+            } else if (selectMenuAns == 0) {
+                return selectMenuAns;
             }
             throw new RuntimeException("");
         }
@@ -112,8 +114,8 @@ public class Kiosk {
         for (int i = 0; i < shoppingCartList.size(); i++){
             System.out.println((i+1) + ". " + shoppingCartList.get(i).toString());
         }
-        int selectMenuAns = scanner.nextInt();
         System.out.println("0. 뒤로가기\t\t | 뒤로가기");
+        int selectMenuAns = scanner.nextInt();
         if (selectMenuAns > shoppingCartList.size() || selectMenuAns < 0)
             throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요");
         if (selectMenuAns == 0) return;
