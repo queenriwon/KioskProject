@@ -22,7 +22,7 @@ public class Kiosk {
                 int selectMenuItemAns = selectMenu(menu.getMenuCategory(), menu.getMenuItems());
                 if (selectMenuItemAns == 0) continue;
 
-                System.out.println("구매창: " + menu.getMenuItems().get(selectMenuItemAns).toString());
+                System.out.println("선택한 메뉴: " + menu.getMenuItems().get(selectMenuItemAns - 1).toString());
 
             } catch (InputMismatchException e){
                 System.out.println("[오류] 정수값을 입력해주세요");

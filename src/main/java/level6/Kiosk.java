@@ -68,8 +68,10 @@ public class Kiosk {
                 throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요");
             if (selectMenuAns == 4) {
                 orderShoppingCart();
-                throw new RuntimeException("");
+            } else if (selectMenuAns == 5) {
+                System.out.println("어떤 상품을 취소하시겠습니까?\n");
             }
+            throw new RuntimeException("");
         }
         int selectMenuAns = scanner.nextInt();
         if (selectMenuAns > list.size() || selectMenuAns < 0)
@@ -77,8 +79,7 @@ public class Kiosk {
         return selectMenuAns;
     }
 
-    public void orderShoppingCart() {
-        System.out.println("아래와 같이 주문 하시겠습니까?\n");
+    public void showShoppingCart() {
         System.out.println("[ Orders ]");
         for (MenuItem item : shoppingCartList) {
             System.out.println(item.toString());
@@ -86,11 +87,44 @@ public class Kiosk {
 
         System.out.println("[ Total ]");
         double shoppingCartPriceSum = shoppingCartList.stream().mapToDouble(MenuItem::getMenuPrice).sum();
+        System.out.println("W " + shoppingCartPriceSum);
+    }
+
+    public void orderShoppingCart() {
+        System.out.println("아래와 같이 주문 하시겠습니까?\n");
+        showShoppingCart();
+
         System.out.println("1. 주문\t\t2. 메뉴판");
         int shoppingCartAns = scanner.nextInt();
         if (shoppingCartAns == 1) {
+            double shoppingCartPriceSum = shoppingCartList.stream().mapToDouble(MenuItem::getMenuPrice).sum();
             System.out.println("주문이 완료되었습니다. 금액은 " + shoppingCartPriceSum + "입니다.");
             shoppingCartList.clear();
+        } else if (shoppingCartAns == 2) {
+            System.out.println("메뉴판으로 돌아갑니다.");
+        } else {
+            throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요");
+        }
+    }
+
+    public void cancelShoppingCart() {
+        System.out.println("어떤 상품을 취소하시겠습니까?\n");
+        for (int i = 0; i < shoppingCartList.size(); i++){
+            System.out.println((i+1) + ". " + shoppingCartList.get(i).toString());
+        }
+        int selectMenuAns = scanner.nextInt();
+        System.out.println("0. 뒤로가기\t\t | 뒤로가기");
+        if (selectMenuAns > shoppingCartList.size() || selectMenuAns < 0)
+            throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요");
+        if (selectMenuAns == 0) return;
+
+        System.out.println("\"" + shoppingCartList.get(selectMenuAns - 1).toString() + "\"");
+        System.out.println("위 상품을 장바구니에서 삭제하시겠습니까?");
+        System.out.println("1. 삭제\t\t2. 메뉴판");
+        int shoppingCartAns = scanner.nextInt();
+        if (shoppingCartAns == 1) {
+            MenuItem removeMenuItem = shoppingCartList.remove(selectMenuAns - 1);
+            System.out.println(removeMenuItem.toString() + "가 장바구니에서 삭제되었습니다.");
         } else if (shoppingCartAns == 2) {
             System.out.println("메뉴판으로 돌아갑니다.");
         } else {
