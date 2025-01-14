@@ -31,6 +31,7 @@ public class Main {
 
             Kiosk kiosk = new Kiosk(menuList);
             kiosk.start();
+
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

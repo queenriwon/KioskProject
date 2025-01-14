@@ -17,16 +17,18 @@ public class Kiosk {
     public void start() {
         while (true) {
             try {
+                // 1. 상위 카테고리 Menu 선택 (+ 장바구니 옵션 )
                 int selectCategoryAns = selectMenu("Main", menuList);
                 if (selectCategoryAns == 0) break;
                 if (selectCategoryAns == -1) continue;
                 Menu menu = menuList.get(selectCategoryAns - 1);
 
+                // 2. 하위 MenuItem 선택
                 int selectMenuItemAns = selectMenu(menu.getMenuCategory(), menu.getMenuItems());
                 if (selectMenuItemAns == 0) continue;
                 MenuItem selectedMenuItem = menu.getMenuItems().get(selectMenuItemAns - 1);
 
-                // 선택한 메뉴 출력
+                // 3. 선택한 MenuItem 를 장바구니에 담을지 선택
                 insertShoppingCart(selectedMenuItem);
 
             } catch (InputMismatchException e){
@@ -39,6 +41,7 @@ public class Kiosk {
         System.out.println("프로그램을 종료합니다.");
     }
 
+    // 메뉴 선택
     public <T> int selectMenu(String title, List<T> list) {
         System.out.println("[ "+ title.toUpperCase() +" MENU ]");
         for (int i = 0; i < list.size(); i++){
@@ -46,6 +49,7 @@ public class Kiosk {
         }
         System.out.println((("Main".equals(title)) ? "0. 종료\t\t\t | 종료" : "0. 뒤로가기\t\t | 뒤로가기"));
 
+        // 장비구니에 상품이 있을 경우
         if (!shoppingCartList.isEmpty() && "Main".equals(title)) {
             System.out.println("[ ORDER MENU ]");
             System.out.println("4. Orders\t\t| 장바구니를 확인 후 주문합니다.");
@@ -72,6 +76,7 @@ public class Kiosk {
         return selectMenuAns;
     }
 
+    // 장바구니 추가
     public void insertShoppingCart(MenuItem menuItem) {
         System.out.println("\n\"" + menuItem.toString() + "\"");
         System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
@@ -88,6 +93,7 @@ public class Kiosk {
         }
     }
 
+    // 장바구니 조회
     public double showShoppingCart() {
         System.out.println("[ Orders ]");
         for(int i = 0; i<shoppingCartList.size(); i++){
@@ -100,6 +106,7 @@ public class Kiosk {
         return shoppingCartPriceSum;
     }
 
+    // 장바구니 주문
     public void orderShoppingCart() {
         System.out.println("아래와 같이 주문 하시겠습니까?\n");
         double shoppingCartPriceSum = showShoppingCart();
@@ -116,6 +123,7 @@ public class Kiosk {
         }
     }
 
+    // 장바구니 삭제
     public void cancelShoppingCart() {
         System.out.println("어떤 상품을 취소하시겠습니까?\n");
         showShoppingCart();
