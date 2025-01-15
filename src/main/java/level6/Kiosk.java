@@ -7,11 +7,11 @@ import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kiosk {
-    private final List<Menu> menuList;
-    private final List<MenuItem> shoppingCartList = new ArrayList<>();
+    private final List<Menu<Double>> menuList;
+    private final List<MenuItem<Double>> shoppingCartList = new ArrayList<>();
     private final Scanner scanner = new Scanner(System.in);
 
-    public Kiosk(List<Menu> menuList) {
+    public Kiosk(List<Menu<Double>> menuList) {
         this.menuList = menuList;
     }
 
@@ -26,14 +26,14 @@ public class Kiosk {
                 if (selectCategoryAns == -1) {
                     continue;
                 }
-                Menu menu = menuList.get(selectCategoryAns - 1);
+                Menu<Double> menu = menuList.get(selectCategoryAns - 1);
 
                 // 2. 하위 MenuItem 선택
                 int selectMenuItemAns = selectMenu(menu.getMenuCategory(), menu.getMenuItems());
                 if (selectMenuItemAns == 0) {
                     continue;
                 }
-                MenuItem selectedMenuItem = menu.getMenuItems().get(selectMenuItemAns - 1);
+                MenuItem<Double> selectedMenuItem = menu.getMenuItems().get(selectMenuItemAns - 1);
 
                 // 3. 선택한 MenuItem 를 장바구니에 담을지 선택
                 insertShoppingCart(selectedMenuItem);
@@ -84,7 +84,7 @@ public class Kiosk {
     }
 
     // 장바구니 추가
-    public void insertShoppingCart(MenuItem menuItem) {
+    public void insertShoppingCart(MenuItem<Double> menuItem) {
         System.out.println("\n\"" + menuItem.toString() + "\"");
         System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인\t\t2. 취소");
@@ -148,7 +148,7 @@ public class Kiosk {
         String lookupShoppingCartString = scanner.nextLine();
         if("0".equals(lookupShoppingCartString)) return;
 
-        List<MenuItem> lookupList = shoppingCartList.stream()
+        List<MenuItem<Double>> lookupList = shoppingCartList.stream()
                     .filter(list -> list.getMenuName().contains(lookupShoppingCartString))
                     .toList();
 
@@ -159,7 +159,7 @@ public class Kiosk {
         }
 
         System.out.println();
-        for (MenuItem menuItem : lookupList) {
+        for (MenuItem<Double> menuItem : lookupList) {
             System.out.println("\"" + menuItem.toString() + "\"");
         }
         System.out.println("위 메뉴를 장바구니에서 삭제하시겠습니까?");
