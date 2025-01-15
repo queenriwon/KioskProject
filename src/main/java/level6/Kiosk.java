@@ -95,7 +95,7 @@ public class Kiosk {
 
     // 장바구니 조회
     public double showShoppingCart() {
-        System.out.println("[ Orders ]");
+        System.out.println("\n[ Orders ]");
         for(int i = 0; i<shoppingCartList.size(); i++){
             System.out.println((i+1) + ". " + shoppingCartList.get(i).toString());
         }
@@ -133,27 +133,40 @@ public class Kiosk {
 
     // 장바구니 삭제
     public void cancelShoppingCart() {
-        System.out.println("어떤 상품을 취소하시겠습니까?\n");
+
         showShoppingCart();
+        System.out.println("삭제할 메뉴의 검색어를 입력하세요.");
         System.out.println("0. 뒤로가기\t\t | 뒤로가기");
 
-        int selectMenuAns = scanner.nextInt();
-        if (selectMenuAns > shoppingCartList.size() || selectMenuAns < 0)
-            throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요");
-        if (selectMenuAns == 0) return;
+        scanner.nextLine();
+        String lookupShoppingCartString = scanner.nextLine();
+        if("0".equals(lookupShoppingCartString)) return;
 
-        System.out.println("\"" + shoppingCartList.get(selectMenuAns - 1).toString() + "\"");
-        System.out.println("위 상품을 장바구니에서 삭제하시겠습니까?");
+        List<MenuItem> lookupList = shoppingCartList.stream()
+                    .filter(list -> list.getMenuName().contains(lookupShoppingCartString))
+                    .toList();
+
+        if (lookupList.isEmpty()) {
+            System.out.println("검색된 상품이 없습니다.");
+            System.out.println("메뉴판으로 돌아갑니다.\n");
+            return;
+        }
+
+        System.out.println();
+        for (MenuItem menuItem : lookupList) {
+            System.out.println("\"" + menuItem.toString() + "\"");
+        }
+        System.out.println("위 메뉴를 장바구니에서 삭제하시겠습니까?");
         System.out.println("1. 삭제\t\t2. 메뉴판");
 
         int shoppingCartAns = scanner.nextInt();
         switch (shoppingCartAns) {
             case 1 -> {
-                MenuItem removeMenuItem = shoppingCartList.remove(selectMenuAns - 1);
-                System.out.println(removeMenuItem.toString() + "가 장바구니에서 삭제되었습니다.\n");
+                shoppingCartList.removeAll(lookupList);
+                System.out.println("해당 메뉴가 장바구니에서 삭제되었습니다.\n");
             }
-            case 2 -> System.out.println("메뉴판으로 돌아갑니다.");
-            default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요");
+            case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
+            default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
         }
     }
 }
