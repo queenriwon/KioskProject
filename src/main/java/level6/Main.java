@@ -6,6 +6,7 @@ import java.util.List;
 public class Main {
     public static void main(String[] args) {
         try {
+            // MenuItem 을 추가
             Menu<Double> burgersMenu = new Menu<>("Burgers");
             burgersMenu.getMenuItems().add(new MenuItem<>("ShackBurger", 6.9, "토마토, 양상추, 쉑소스가 토핑된 치즈버거"));
             burgersMenu.getMenuItems().add(new MenuItem<>("SmokeShack",8.9, "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"));
@@ -24,11 +25,13 @@ public class Main {
             dessertsMenu.getMenuItems().add(new MenuItem<>("Brownie", 4.0, "촉촉한 초코 브라우니"));
             dessertsMenu.getMenuItems().add(new MenuItem<>("Ice Cream Cone", 3.0, "바삭한 콘에 담긴 아이스크림"));
 
+            // 추가된 Menu 를 ArrayList 에 .add()
             List<Menu<Double>> menuList = new ArrayList<>();
             menuList.add(burgersMenu);
             menuList.add(drinksMenu);
             menuList.add(dessertsMenu);
 
+            // 만들어진 리스트를 Kiosk 에 보내면서 kiosk.start()실행
             Kiosk kiosk = new Kiosk(menuList);
             kiosk.start();
 
