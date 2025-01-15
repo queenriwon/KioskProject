@@ -117,8 +117,12 @@ public class Kiosk {
                         // 2. 선택된 메뉴 장바구니에 추가
                         System.out.println(menuItem.getMenuName() + "이 장바구니에 추가되었습니다.\n");
                         shoppingCartList.add(menuItem);
+                        return;
                     }
-                    case 2 -> System.out.println(menuItem.getMenuName() + "이 선택 취소되었습니다.");
+                    case 2 -> {
+                        System.out.println(menuItem.getMenuName() + "이 선택 취소되었습니다.");
+                        return;
+                    }
                     default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
                 }
             } catch (InputMismatchException e) {
@@ -169,8 +173,12 @@ public class Kiosk {
                         // 3. 주문
                         System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
                         shoppingCartList.clear();
+                        return;
                     }
-                    case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
+                    case 2 -> {
+                        System.out.println("메뉴판으로 돌아갑니다.\n");
+                        return;
+                    }
                     default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
                 }
             } catch (InputMismatchException e) {
@@ -219,8 +227,12 @@ public class Kiosk {
                     case 1 -> {
                         shoppingCartList.removeAll(lookupList);
                         System.out.println("해당 메뉴가 장바구니에서 삭제되었습니다.\n");
+                        return;
                     }
-                    case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
+                    case 2 -> {
+                        System.out.println("메뉴판으로 돌아갑니다.\n");
+                        return;
+                    }
                     default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
                 }
             } catch (InputMismatchException e) {
