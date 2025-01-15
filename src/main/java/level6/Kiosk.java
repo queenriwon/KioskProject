@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Kiosk {
     private final List<Menu> menuList;
@@ -50,9 +51,9 @@ public class Kiosk {
     // 메뉴 선택
     public <T> int selectMenu(String title, List<T> list) {
         System.out.println("[ "+ title.toUpperCase() +" MENU ]");
-        for (int i = 0; i < list.size(); i++){
-            System.out.println((i+1) + ". " + list.get(i).toString());
-        }
+
+        AtomicInteger atomicInteger = new AtomicInteger(1);
+        list.forEach(item -> System.out.println(atomicInteger.getAndIncrement() + ". " + item.toString()));
         System.out.println((("Main".equals(title)) ? "0. 종료\t\t\t | 종료" : "0. 뒤로가기\t\t | 뒤로가기"));
 
         // 장비구니에 상품이 있을 경우
@@ -139,7 +140,6 @@ public class Kiosk {
 
     // 장바구니 삭제
     public void cancelShoppingCart() {
-
         showShoppingCart();
         System.out.println("삭제할 메뉴의 검색어를 입력하세요.");
         System.out.println("0. 뒤로가기\t\t | 뒤로가기");
