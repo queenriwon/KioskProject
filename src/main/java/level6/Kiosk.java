@@ -47,14 +47,14 @@ public class Kiosk {
     // 메뉴 선택
     public <T> int selectMenu(String title, List<T> list) {
         // 1. 메뉴 출력
-        System.out.println("[ "+ title.toUpperCase() +" MENU ]");
+        System.out.println("\n[ "+ title.toUpperCase() +" MENU ]");
         AtomicInteger atomicInteger = new AtomicInteger(1);
         list.forEach(item -> System.out.println(atomicInteger.getAndIncrement() + ". " + item.toString()));
         System.out.println((("Main".equals(title)) ? "0. 종료\t\t\t | 종료" : "0. 뒤로가기\t\t | 뒤로가기"));
 
         // 2-1. 장비구니에 상품이 있을 경우
         if (!shoppingCartList.isEmpty() && "Main".equals(title)) {
-            System.out.println("[ ORDER MENU ]");
+            System.out.println("\n[ ORDER MENU ]");
             System.out.println("4. Orders\t\t| 장바구니를 확인 후 주문합니다.");
             System.out.println("5. Cancel\t\t| 진행중인 주문을 취소합니다.");
 
@@ -179,7 +179,7 @@ public class Kiosk {
                         System.out.println("메뉴판으로 돌아갑니다.\n");
                         return;
                     }
-                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
+                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
@@ -233,7 +233,7 @@ public class Kiosk {
                         System.out.println("메뉴판으로 돌아갑니다.\n");
                         return;
                     }
-                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
+                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
                 }
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
