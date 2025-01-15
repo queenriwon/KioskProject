@@ -21,19 +21,13 @@ public class Kiosk {
                 // 1. 상위 카테고리 Menu 를 인덱스를 이용해 선택
                 // (+ 장바구니 옵션(주문,취소))
                 int selectCategoryAns = selectMenu("Main", menuList);
-                if (selectCategoryAns == 0) {
-                    break;
-                }
-                if (selectCategoryAns == -1) {
-                    continue;
-                }
+                if (selectCategoryAns == 0) break;
+                if (selectCategoryAns == -1) continue;
                 Menu<Double> menu = menuList.get(selectCategoryAns - 1);
 
                 // 2. 하위 카테고리 MenuItem 를 인덱스를 이용해 선택
                 int selectMenuItemAns = selectMenu(menu.getMenuCategory(), menu.getMenuItems());
-                if (selectMenuItemAns == 0) {
-                    continue;
-                }
+                if (selectMenuItemAns == 0) continue;
                 MenuItem<Double> selectedMenuItem = menu.getMenuItems().get(selectMenuItemAns - 1);
 
                 // 3. 선택한 MenuItem 를 장바구니에 담을지 선택
@@ -54,7 +48,6 @@ public class Kiosk {
     public <T> int selectMenu(String title, List<T> list) {
         // 1. 메뉴 출력
         System.out.println("[ "+ title.toUpperCase() +" MENU ]");
-
         AtomicInteger atomicInteger = new AtomicInteger(1);
         list.forEach(item -> System.out.println(atomicInteger.getAndIncrement() + ". " + item.toString()));
         System.out.println((("Main".equals(title)) ? "0. 종료\t\t\t | 종료" : "0. 뒤로가기\t\t | 뒤로가기"));
@@ -65,29 +58,48 @@ public class Kiosk {
             System.out.println("4. Orders\t\t| 장바구니를 확인 후 주문합니다.");
             System.out.println("5. Cancel\t\t| 진행중인 주문을 취소합니다.");
 
-            // 2-2. 선택지 입력
-            int selectMenuAns = scanner.nextInt();
-            if (selectMenuAns > list.size() + 2 || selectMenuAns < 0)
-                throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요.");
-            return switch (selectMenuAns) {
-                case 4 -> {
-                    // 2-3. 장바구니 주문
-                    orderShoppingCart();
-                    yield -1;
+            while (true) {
+                try {
+                    // 2-2. 선택지 입력
+                    int selectMenuAns = scanner.nextInt();
+                    if (selectMenuAns > list.size() + 2 || selectMenuAns < 0)
+                        throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요.");
+                    return switch (selectMenuAns) {
+                        case 4 -> {
+                            // 2-3. 장바구니 주문
+                            orderShoppingCart();
+                            yield -1;
+                        }
+                        case 5 -> {
+                            // 2-4. 장바구니 삭제
+                            cancelShoppingCart();
+                            yield -1;
+                        }
+                        default -> selectMenuAns;
+                    };
+                } catch (InputMismatchException e) {
+                    System.out.println("[오류] 정수값을 입력해주세요.");
+                    scanner.nextLine();
+                } catch (IndexOutOfBoundsException e){
+                    System.out.println(e.getMessage());
                 }
-                case 5 -> {
-                    // 2-4. 장바구니 삭제
-                    cancelShoppingCart();
-                    yield -1;
-                }
-                default -> selectMenuAns;
-            };
+            }
         }
-        // 3. 메뉴 입력
-        int selectMenuAns = scanner.nextInt();
-        if (selectMenuAns > list.size() || selectMenuAns < 0)
-            throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요.");
-        return selectMenuAns;
+        while (true) {
+            try {
+                // 3. 메뉴 입력
+                int selectMenuAns = scanner.nextInt();
+                if (selectMenuAns > list.size() || selectMenuAns < 0)
+                    throw new IndexOutOfBoundsException("[오류] 원하는 메뉴를 선택해주세요.");
+                return selectMenuAns;
+            } catch (InputMismatchException e) {
+                System.out.println("[오류] 정수값을 입력해주세요.");
+                scanner.nextLine();
+            } catch (IndexOutOfBoundsException e){
+                System.out.println(e.getMessage());
+            }
+        }
+
     }
 
     // 장바구니 추가
@@ -97,15 +109,24 @@ public class Kiosk {
         System.out.println("위 메뉴를 장바구니에 추가하시겠습니까?");
         System.out.println("1. 확인\t\t2. 취소");
 
-        int shoppingCartAns = scanner.nextInt();
-        switch (shoppingCartAns) {
-            case 1 -> {
-                // 2. 선택된 메뉴 장바구니에 추가
-                System.out.println(menuItem.getMenuName() + "이 장바구니에 추가되었습니다.\n");
-                shoppingCartList.add(menuItem);
+        while (true) {
+            try {
+                int shoppingCartAns = scanner.nextInt();
+                switch (shoppingCartAns) {
+                    case 1 -> {
+                        // 2. 선택된 메뉴 장바구니에 추가
+                        System.out.println(menuItem.getMenuName() + "이 장바구니에 추가되었습니다.\n");
+                        shoppingCartList.add(menuItem);
+                    }
+                    case 2 -> System.out.println(menuItem.getMenuName() + "이 선택 취소되었습니다.");
+                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("[오류] 정수값을 입력해주세요.");
+                scanner.nextLine();
+            } catch (IndexOutOfBoundsException e){
+                System.out.println(e.getMessage());
             }
-            case 2 -> System.out.println(menuItem.getMenuName() + "이 선택 취소되었습니다.");
-            default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
         }
     }
 
@@ -131,24 +152,33 @@ public class Kiosk {
         double shoppingCartPriceSum = showShoppingCart();
         System.out.println("1. 주문\t\t2. 메뉴판");
 
-        int shoppingCartAns = scanner.nextInt();
-        switch (shoppingCartAns) {
-            case 1 -> {
-                // 2. 할인 정보 입력
-                System.out.println("할인 정보를 입력해주세요.");
-                UserDiscountType.printUserDiscountType();
+        while (true) {
+            try {
+                int shoppingCartAns = scanner.nextInt();
+                switch (shoppingCartAns) {
+                    case 1 -> {
+                        // 2. 할인 정보 입력
+                        System.out.println("할인 정보를 입력해주세요.");
+                        UserDiscountType.printUserDiscountType();
 
-                int discountTypeAns = scanner.nextInt();
-                UserDiscountType userDiscountType = UserDiscountType.getUserDiscountType(discountTypeAns);
-                double discountRate = userDiscountType.getDiscountRate();
-                String discountName = userDiscountType.getDiscountName();
+                        int discountTypeAns = scanner.nextInt();
+                        UserDiscountType userDiscountType = UserDiscountType.getUserDiscountType(discountTypeAns);
+                        double discountRate = userDiscountType.getDiscountRate();
+                        String discountName = userDiscountType.getDiscountName();
 
-                // 3. 주문
-                System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
-                shoppingCartList.clear();
+                        // 3. 주문
+                        System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
+                        shoppingCartList.clear();
+                    }
+                    case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
+                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("[오류] 정수값을 입력해주세요.");
+                scanner.nextLine();
+            } catch (IndexOutOfBoundsException e){
+                System.out.println(e.getMessage());
             }
-            case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
-            default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
         }
     }
 
@@ -182,14 +212,23 @@ public class Kiosk {
         System.out.println("위 메뉴를 장바구니에서 삭제하시겠습니까?");
         System.out.println("1. 삭제\t\t2. 메뉴판");
 
-        int shoppingCartAns = scanner.nextInt();
-        switch (shoppingCartAns) {
-            case 1 -> {
-                shoppingCartList.removeAll(lookupList);
-                System.out.println("해당 메뉴가 장바구니에서 삭제되었습니다.\n");
+        while (true) {
+            try {
+                int shoppingCartAns = scanner.nextInt();
+                switch (shoppingCartAns) {
+                    case 1 -> {
+                        shoppingCartList.removeAll(lookupList);
+                        System.out.println("해당 메뉴가 장바구니에서 삭제되었습니다.\n");
+                    }
+                    case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
+                    default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("[오류] 정수값을 입력해주세요.");
+                scanner.nextLine();
+            } catch (IndexOutOfBoundsException e){
+                System.out.println(e.getMessage());
             }
-            case 2 -> System.out.println("메뉴판으로 돌아갑니다.\n");
-            default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.\n");
         }
     }
 }
