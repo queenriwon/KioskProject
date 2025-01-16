@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Kiosk {
     private final List<Menu<Double>> menuList;
     private final Scanner scanner = new Scanner(System.in);
-    private final ShoppingCart shoppingCart = new ShoppingCart();
+    private final ShoppingCart shoppingCart = new ShoppingCart(scanner);
 
     public Kiosk(List<Menu<Double>> menuList) {
         this.menuList = menuList;
@@ -102,6 +102,5 @@ public class Kiosk {
                 System.out.println(e.getMessage());
             }
         }
-
     }
 }

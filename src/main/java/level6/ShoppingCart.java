@@ -6,8 +6,13 @@ import java.util.List;
 import java.util.Scanner;
 
 public class ShoppingCart {
-    private final Scanner scanner = new Scanner(System.in);
+    private final Scanner scanner;
     private final List<MenuItem<Double>> shoppingCartList = new ArrayList<>();
+
+    // Scanner 를 하나의 인스턴스만 사용하게 하기 위해 생성자의 매개변수로 전달
+    public ShoppingCart(Scanner scanner) {
+        this.scanner = scanner;
+    }
 
     public List<MenuItem<Double>> getShoppingCartList() {
         return shoppingCartList;
