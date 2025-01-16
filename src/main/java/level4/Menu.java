@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Menu {
-    private String menuCategory;
-    private List<MenuItem> menuItems = new ArrayList<>();
+    private final String menuCategory;
+    private final List<MenuItem> menuItems = new ArrayList<>();
 
     public Menu(String menuCategory) {
         this.menuCategory = menuCategory;
@@ -15,16 +15,8 @@ public class Menu {
         return menuCategory;
     }
 
-    public void setMenuCategory(String menuCategory) {
-        this.menuCategory = menuCategory;
-    }
-
     public List<MenuItem> getMenuItems() {
         return menuItems;
-    }
-
-    public void setMenuItems(List<MenuItem> menuItems) {
-        this.menuItems = menuItems;
     }
 
     @Override

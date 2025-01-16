@@ -8,6 +8,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
+                // 메뉴 출력
                 System.out.println("[ SHAKESHACK MENU ]");
                 System.out.println("1. ShackBurger   | W 6.9 | 토마토, 양상추, 쉑소스가 토핑된 치즈버거");
                 System.out.println("2. SmokeShack    | W 8.9 | 베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거");

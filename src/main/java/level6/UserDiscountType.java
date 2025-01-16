@@ -2,7 +2,7 @@ package level6;
 
 public enum UserDiscountType {
     // 할인 유형을 enum 으로 지정
-    NATIONAL(1,"국가유공자",0.1),
+    NATIONAL(1, "국가유공자", 0.1),
     ARMY(2, "군인", 0.05),
     STUDENT(3, "학생", 0.03),
     GENERAL(4, "일반인", 0);
@@ -31,7 +31,7 @@ public enum UserDiscountType {
     }
 
     // 해당되는 인덱스인지 검사하는 메서드
-    public static UserDiscountType getUserDiscountType(int index){
+    public static UserDiscountType getUserDiscountType(int index) {
         for (UserDiscountType discountType : values()) {
             if (discountType.getDiscountIndex() == index) return discountType;
         }
@@ -39,7 +39,7 @@ public enum UserDiscountType {
     }
 
     // 할인율 안내 출력 메서드
-    public static void printUserDiscountType(){
+    public static void printUserDiscountType() {
         int i = 1;
         for (UserDiscountType discountType : values()) {
             System.out.println(i + ". " + discountType.toString());

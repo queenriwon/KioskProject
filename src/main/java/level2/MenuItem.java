@@ -1,9 +1,9 @@
 package level2;
 
 public class MenuItem {
-    private String menuName;
-    private double menuPrice;
-    private String menuDescription;
+    private final String menuName;
+    private final double menuPrice;
+    private final String menuDescription;
 
     public MenuItem(String menuName, double menuPrice, String menuDescription) {
         this.menuName = menuName;
@@ -15,23 +15,11 @@ public class MenuItem {
         return menuName;
     }
 
-    public void setMenuName(String menuName) {
-        this.menuName = menuName;
-    }
-
     public double getMenuPrice() {
         return menuPrice;
     }
 
-    public void setMenuPrice(double menuPrice) {
-        this.menuPrice = menuPrice;
-    }
-
     public String getMenuDescription() {
         return menuDescription;
-    }
-
-    public void setMenuDescription(String menuDescription) {
-        this.menuDescription = menuDescription;
     }
 }

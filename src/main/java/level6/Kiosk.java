@@ -34,10 +34,10 @@ public class Kiosk {
                 // (+ 할인)
                 insertShoppingCart(selectedMenuItem);
 
-            } catch (InputMismatchException e){
+            } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
                 scanner.nextLine();
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -47,7 +47,7 @@ public class Kiosk {
     // 메뉴 선택
     public <T> int selectMenu(String title, List<T> list) {
         // 1. 메뉴 출력
-        System.out.println("\n[ "+ title.toUpperCase() +" MENU ]");
+        System.out.println("\n[ " + title.toUpperCase() + " MENU ]");
         AtomicInteger atomicInteger = new AtomicInteger(1);
         list.forEach(item -> System.out.println(atomicInteger.getAndIncrement() + ". " + item.toString()));
         System.out.println((("Main".equals(title)) ? "0. 종료\t\t\t | 종료" : "0. 뒤로가기\t\t | 뒤로가기"));
@@ -80,7 +80,7 @@ public class Kiosk {
                 } catch (InputMismatchException e) {
                     System.out.println("[오류] 정수값을 입력해주세요.");
                     scanner.nextLine();
-                } catch (IndexOutOfBoundsException e){
+                } catch (IndexOutOfBoundsException e) {
                     System.out.println(e.getMessage());
                 }
             }
@@ -95,7 +95,7 @@ public class Kiosk {
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
                 scanner.nextLine();
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -128,7 +128,7 @@ public class Kiosk {
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
                 scanner.nextLine();
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -138,8 +138,8 @@ public class Kiosk {
     public double showShoppingCart() {
         // 1. 장바구니 조회
         System.out.println("\n[ Orders ]");
-        for(int i = 0; i<shoppingCartList.size(); i++){
-            System.out.println((i+1) + ". " + shoppingCartList.get(i).toString());
+        for (int i = 0; i < shoppingCartList.size(); i++) {
+            System.out.println((i + 1) + ". " + shoppingCartList.get(i).toString());
         }
 
         // 2. 총 가격 조회
@@ -184,7 +184,7 @@ public class Kiosk {
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
                 scanner.nextLine();
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
         }
@@ -200,12 +200,12 @@ public class Kiosk {
         // 2. 삭제할 검색어 입력
         scanner.nextLine();
         String lookupShoppingCartString = scanner.nextLine();
-        if("0".equals(lookupShoppingCartString)) return;
+        if ("0".equals(lookupShoppingCartString)) return;
 
         // 3. 검색된 상품 출력
         List<MenuItem<Double>> lookupList = shoppingCartList.stream()
-                    .filter(list -> list.getMenuName().contains(lookupShoppingCartString))
-                    .toList();
+                .filter(list -> list.getMenuName().contains(lookupShoppingCartString))
+                .toList();
         if (lookupList.isEmpty()) {
             System.out.println("검색된 상품이 없습니다.");
             System.out.println("메뉴판으로 돌아갑니다.\n");
@@ -238,7 +238,7 @@ public class Kiosk {
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
                 scanner.nextLine();
-            } catch (IndexOutOfBoundsException e){
+            } catch (IndexOutOfBoundsException e) {
                 System.out.println(e.getMessage());
             }
         }

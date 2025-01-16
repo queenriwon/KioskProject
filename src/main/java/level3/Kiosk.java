@@ -6,25 +6,27 @@ import java.util.List;
 import java.util.Scanner;
 
 public class Kiosk {
-    List<MenuItem> menuItems;
+    private final List<MenuItem> menuItems = new ArrayList<>();
+    private final Scanner scanner = new Scanner(System.in);
 
     public Kiosk() {
-        menuItems = new ArrayList<>();
+        // 생성자를 이용해 메뉴 데이터 적재
         menuItems.add(new MenuItem("ShackBurger", 6.9, "토마토, 양상추, 쉑소스가 토핑된 치즈버거"));
-        menuItems.add(new MenuItem("SmokeShack",8.9, "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"));
+        menuItems.add(new MenuItem("SmokeShack", 8.9, "베이컨, 체리 페퍼에 쉑소스가 토핑된 치즈버거"));
         menuItems.add(new MenuItem("Cheeseburger", 6.9, "포테이토 번과 비프패티, 치즈가 토핑된 치즈버거"));
         menuItems.add(new MenuItem("Hamburger", 5.4, "비프패티를 기반으로 야채가 들어간 기본버거"));
     }
 
     public void start() {
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             try {
+                // 1. 메뉴 출력
                 for (MenuItem item : menuItems) {
-                    System.out.println((menuItems.indexOf(item)+1) + ". " + item.getMenuName() + "\t | W " + item.getMenuPrice() + " | " + item.getMenuDescription());
+                    System.out.println((menuItems.indexOf(item) + 1) + ". " + item.getMenuName() + "\t | W " + item.getMenuPrice() + " | " + item.getMenuDescription());
                 }
                 System.out.println("0. 종료\t\t\t | 종료");
 
+                // 2. 선택할 메뉴 입력
                 int mainAns = scanner.nextInt();
                 if (mainAns == 0) break;
                 if (mainAns >= menuItems.size() || mainAns < 0)
