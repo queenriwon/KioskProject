@@ -77,26 +77,41 @@ public class ShoppingCart {
                 int shoppingCartAns = scanner.nextInt();
                 switch (shoppingCartAns) {
                     case 1 -> {
-                        // 2. 할인 정보 입력
-                        System.out.println("할인 정보를 입력해주세요.");
-                        UserDiscountType.printUserDiscountType();
-
-                        int discountTypeAns = scanner.nextInt();
-                        UserDiscountType userDiscountType = UserDiscountType.getUserDiscountType(discountTypeAns);
-                        double discountRate = userDiscountType.getDiscountRate();
-                        String discountName = userDiscountType.getDiscountName();
-
-                        // 3. 주문
-                        System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
-                        shoppingCartList.clear();
+                        // 2. 할인 유형 선택 후 주문
+                        discountShoppingCart(shoppingCartPriceSum);
                         return;
                     }
                     case 2 -> {
-                        System.out.println("메뉴판으로 돌아갑니다.\n");
                         return;
                     }
                     default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
                 }
+            } catch (InputMismatchException e) {
+                System.out.println("[오류] 정수값을 입력해주세요.");
+                scanner.nextLine();
+            } catch (IndexOutOfBoundsException e) {
+                System.out.println(e.getMessage());
+            }
+        }
+    }
+
+    // 장바구니 주문 - 할인
+    public void discountShoppingCart(double shoppingCartPriceSum) {
+        // 2. 할인 정보 입력
+        System.out.println("할인 정보를 입력해주세요.");
+        UserDiscountType.printUserDiscountType();
+
+        while (true) {
+            try {
+                int discountTypeAns = scanner.nextInt();
+                UserDiscountType userDiscountType = UserDiscountType.getUserDiscountType(discountTypeAns);
+                double discountRate = userDiscountType.getDiscountRate();
+                String discountName = userDiscountType.getDiscountName();
+
+                // 3. 주문
+                System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
+                shoppingCartList.clear();
+                return;
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
                 scanner.nextLine();
@@ -124,7 +139,6 @@ public class ShoppingCart {
                 .toList();
         if (lookupList.isEmpty()) {
             System.out.println("검색된 상품이 없습니다.");
-            System.out.println("메뉴판으로 돌아갑니다.\n");
             return;
         }
 
@@ -146,7 +160,6 @@ public class ShoppingCart {
                         return;
                     }
                     case 2 -> {
-                        System.out.println("메뉴판으로 돌아갑니다.\n");
                         return;
                     }
                     default -> throw new IndexOutOfBoundsException("[오류] 선택사항을 입력해주세요.");
