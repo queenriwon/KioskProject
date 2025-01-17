@@ -79,6 +79,8 @@ public class ShoppingCart {
                     case 1 -> {
                         // 2. 할인 유형 선택 후 주문
                         discountShoppingCart(shoppingCartPriceSum);
+                        // 3. 장바구니 바움
+                        shoppingCartList.clear();
                         return;
                     }
                     case 2 -> {
@@ -110,7 +112,6 @@ public class ShoppingCart {
 
                 // 3. 주문
                 System.out.println("주문이 완료되었습니다. " + discountName + " 사용자로, 금액은 W " + shoppingCartPriceSum * (1 - discountRate) + " 입니다.\n");
-                shoppingCartList.clear();
                 return;
             } catch (InputMismatchException e) {
                 System.out.println("[오류] 정수값을 입력해주세요.");
